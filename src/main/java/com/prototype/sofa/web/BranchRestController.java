@@ -28,10 +28,10 @@ public class BranchRestController {
     }
 
     @GetMapping(value = "/all/radius")
-    public List<Branch> getAllBranchesByRadius(@RequestParam(value = "radius", required = false) Double radius,
-                                               @RequestParam(value = "latitude", required = false) Double latitude,
-                                               @RequestParam(value = "longitude", required = false) Double longitude) {
-        return branchService.getAllBranchesByRadius(radius, latitude, longitude);
+    public List<Branch> getAllBranchesByRadius(@RequestParam(value = "latitude", required = false) Double latitude,
+                                               @RequestParam(value = "longitude", required = false) Double longitude,
+                                               @RequestParam(value = "radius", required = false) Double radius) {
+        return branchService.getAllBranchesByRadius(latitude, longitude, radius);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -11,7 +11,6 @@ import java.util.List;
 
 @Transactional(readOnly = true)
 public interface CrudBranchRepository extends JpaRepository<Branch, Integer> {
-    String HAVERSINE_PART = "(6371 * acos(cos(radians(?2)) * cos(radians(b.latitude)) * cos(radians(b.longitude) - radians(?3)) + sin(radians(?2)) * sin(radians(b.latitude))))";
 
     @Transactional
     @Modifying
@@ -32,6 +31,7 @@ public interface CrudBranchRepository extends JpaRepository<Branch, Integer> {
     @Query("SELECT b FROM Branch b WHERE b.id=?1")
     Branch getByName(String name);
 
-    @Query("SELECT b FROM Branch b WHERE " + HAVERSINE_PART + " < ?1 ORDER BY " + HAVERSINE_PART + " DESC")
-    List<Branch> getAllBranchesByRadius(Double radius, Double latitude, Double longitude);
+    @Query(value = "SELECT * FROM branches WHERE ST_Distance(location, ST_MakePoint(:latitude, :longitude)) <= :radius * 1000" +
+            "ORDER BY ST_Distance(location, ST_MakePoint(:latitude, :longitude))", nativeQuery = true)
+    List<Branch> getAllBranchesByRadius(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("radius") Double radius);
 }

@@ -111,7 +111,7 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public List<Branch> getAllBranchesByRadius(Double radius, Double latitude, Double longitude) {
-        return branchRepository.getAllBranchesByRadius(radius, latitude, longitude);
+    public List<Branch> getAllBranchesByRadius(Double latitude, Double longitude, Double radius) {
+        return branchRepository.getAllBranchesByRadius(latitude, longitude, radius);
     }
 }

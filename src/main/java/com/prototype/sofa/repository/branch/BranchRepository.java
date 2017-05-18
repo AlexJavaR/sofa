@@ -18,5 +18,5 @@ public interface BranchRepository {
 
     List<Branch> findAll();
 
-    List<Branch> getAllBranchesByRadius(Double radius, Double latitude, Double longitude);
+    List<Branch> getAllBranchesByRadius(Double latitude, Double longitude, Double radius);
 }

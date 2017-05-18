@@ -38,7 +38,7 @@ public class BranchRepositoryImpl implements BranchRepository {
     }
 
     @Override
-    public List<Branch> getAllBranchesByRadius(Double radius, Double latitude, Double longitude) {
-        return crudBranchRepository.getAllBranchesByRadius(radius, latitude, longitude);
+    public List<Branch> getAllBranchesByRadius(Double latitude, Double longitude, Double radius) {
+        return crudBranchRepository.getAllBranchesByRadius(latitude, longitude, radius);
     }
 }
