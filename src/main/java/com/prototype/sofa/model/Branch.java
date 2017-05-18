@@ -1,16 +1,14 @@
 package com.prototype.sofa.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "branches", uniqueConstraints = {@UniqueConstraint(columnNames = {"place_id", "department_id"}, name = "branches_unique_place_department_idx")})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Branch extends BaseEntity {
 
     @Column(name = "place_id", nullable = false)
@@ -35,7 +33,7 @@ public class Branch extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id", nullable = false)
-    //@JsonManagedReference
+    @JsonManagedReference
     private Department department;
 
     public Branch() {
