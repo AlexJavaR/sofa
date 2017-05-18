@@ -9,6 +9,8 @@ DROP TABLE IF EXISTS departments;
 DROP TABLE IF EXISTS languages;
 DROP SEQUENCE IF EXISTS global_seq;
 
+CREATE EXTENSION postgis;
+CREATE EXTENSION btree_gist;
 CREATE SEQUENCE global_seq START 100000;
 
 CREATE TABLE languages
@@ -19,12 +21,12 @@ CREATE TABLE languages
 
 CREATE TABLE departments
 (
-  id             INTEGER PRIMARY KEY DEFAULT nextval('global_seq')
+  id         INTEGER PRIMARY KEY DEFAULT nextval('global_seq')
 );
 
 CREATE TABLE categories
 (
-  id             INTEGER PRIMARY KEY DEFAULT nextval('global_seq')
+  id         INTEGER PRIMARY KEY DEFAULT nextval('global_seq')
 );
 
 CREATE TABLE categories_translate
@@ -81,12 +83,12 @@ CREATE TABLE branches
   id             INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   department_id  INTEGER NOT NULL,
   place_id       VARCHAR NOT NULL,
-  latitude       DOUBLE PRECISION NOT NULL,
-  longitude      DOUBLE PRECISION NOT NULL,
+  latitude       DOUBLE PRECISION NOT NULL CHECK(latitude > -90 and latitude <= 90),
+  longitude      DOUBLE PRECISION NOT NULL CHECK(longitude > -180 and longitude <= 180),
   phone          TEXT NOT NULL,
   hour           TEXT NOT NULL,
+  location       geography(POINT, 4326) NOT NULL, -- PostGIS geom field with SRID 4326
   FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX branches_unique_place_department_idx ON branches (place_id, department_id);
-
-CREATE EXTENSION postgis;
+CREATE INDEX branches_location_idx ON branches USING GIST(location);
