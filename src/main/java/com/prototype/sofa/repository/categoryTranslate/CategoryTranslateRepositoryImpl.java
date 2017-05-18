@@ -1,5 +1,6 @@
 package com.prototype.sofa.repository.categoryTranslate;
 
+import com.prototype.sofa.model.Category;
 import com.prototype.sofa.model.CategoryTranslate;
 import com.prototype.sofa.model.Language;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,10 @@ public class CategoryTranslateRepositoryImpl implements CategoryTranslateReposit
     @Override
     public List<CategoryTranslate> getAllCategoriesByLanguage(Language language) {
         return crudCategoryTranslateRepository.getAllCategoriesByLanguage(language);
+    }
+
+    @Override
+    public List<CategoryTranslate> findAllCategoryTranslateByCategory(Category category) {
+        return crudCategoryTranslateRepository.findAllCategoryTranslateByCategory(category);
     }
 }

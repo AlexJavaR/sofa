@@ -1,5 +1,6 @@
 package com.prototype.sofa.repository.categoryTranslate;
 
+import com.prototype.sofa.model.Category;
 import com.prototype.sofa.model.CategoryTranslate;
 import com.prototype.sofa.model.Language;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,6 +30,9 @@ public interface CrudCategoryTranslateRepository extends JpaRepository<CategoryT
 
     List<CategoryTranslate> getAllCategoriesByLanguage(Language language);
 
-    //@Query("SELECT c FROM Category c WHERE c.name=?1")
+    //@Query("SELECT c FROM CategoryTranslate c WHERE c.name=?1")
     CategoryTranslate getByNameIgnoreCase(String name);
+
+    @Query("SELECT c FROM CategoryTranslate c WHERE c.category=?1")
+    List<CategoryTranslate> findAllCategoryTranslateByCategory(Category category);
 }

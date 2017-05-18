@@ -6,7 +6,7 @@ import com.prototype.sofa.model.Language;
 import com.prototype.sofa.repository.category.CategoryRepository;
 import com.prototype.sofa.repository.categoryTranslate.CategoryTranslateRepository;
 import com.prototype.sofa.repository.language.LanguageRepository;
-import com.prototype.sofa.to.ToCategory;
+import com.prototype.sofa.to.ExistCategory;
 import com.prototype.sofa.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,11 +58,11 @@ public class CategoryTranslateServiceImpl implements CategoryTranslateService {
     }
 
     @Override
-    public CategoryTranslate addCategoryToExist(ToCategory toCategory) {
-        Language language = languageRepository.getByName(toCategory.getNameLanguage());
-        CategoryTranslate existCategoryTranslate = categoryTranslateRepository.getByName(toCategory.getNameExistCategory());
+    public CategoryTranslate addCategoryToExist(ExistCategory existCategory) {
+        Language language = languageRepository.getByName(existCategory.getNameLanguageCategory());
+        CategoryTranslate existCategoryTranslate = categoryTranslateRepository.getByName(existCategory.getNameCategoryExist());
         if (language == null || existCategoryTranslate == null) return null;
-        CategoryTranslate categoryTranslate = new CategoryTranslate(toCategory.getNameCategory(), existCategoryTranslate.getCategory(), language);
+        CategoryTranslate categoryTranslate = new CategoryTranslate(existCategory.getNameCategory(), existCategoryTranslate.getCategory(), language);
 
         return categoryTranslateRepository.save(categoryTranslate);
     }
@@ -79,5 +79,18 @@ public class CategoryTranslateServiceImpl implements CategoryTranslateService {
             }
         });
         return categoryTranslates;
+    }
+
+    @Override
+    public List<CategoryTranslate> getCategoryWithAllLanguagesByName(String nameCategory) {
+        CategoryTranslate categoryTranslate = categoryTranslateRepository.getByName(nameCategory);
+        Category category = categoryTranslate.getCategory();
+        return categoryTranslateRepository.findAllCategoryTranslateByCategory(category);
+    }
+
+    @Override
+    public List<CategoryTranslate> getCategoryWithAllLanguagesById(Integer id) {
+        Category category = categoryRepository.findOne(id);
+        return categoryTranslateRepository.findAllCategoryTranslateByCategory(category);
     }
 }

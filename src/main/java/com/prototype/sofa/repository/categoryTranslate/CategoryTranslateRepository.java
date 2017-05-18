@@ -1,5 +1,6 @@
 package com.prototype.sofa.repository.categoryTranslate;
 
+import com.prototype.sofa.model.Category;
 import com.prototype.sofa.model.CategoryTranslate;
 import com.prototype.sofa.model.Language;
 
@@ -20,4 +21,6 @@ public interface CategoryTranslateRepository {
     List<CategoryTranslate> findAll();
 
     List<CategoryTranslate> getAllCategoriesByLanguage(Language language);
+
+    List<CategoryTranslate> findAllCategoryTranslateByCategory(Category category);
 }
