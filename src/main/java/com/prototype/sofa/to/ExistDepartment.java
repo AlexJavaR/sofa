@@ -3,32 +3,22 @@ package com.prototype.sofa.to;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ExistDepartment {
-    private String nameDepartment;
-    private String nameLanguageDepartment;
-    private String nameDepartmentExist;
     private String nameLanguageDepartmentExist;
     private String nameCategoryDepartmentExist;
+    private String nameDepartmentExist;
+    private String nameLanguageDepartment;
+    private String nameDepartment;
 
-    public ExistDepartment(@JsonProperty("nameDepartment") String nameDepartment, @JsonProperty("nameLanguageDepartment") String nameLanguageDepartment,
-                           @JsonProperty("nameDepartmentExist") String nameDepartmentExist, @JsonProperty("nameLanguageDepartmentExist") String nameLanguageDepartmentExist,
-                           @JsonProperty("nameCategoryDepartmentExist") String nameCategoryDepartmentExist) {
-        this.nameDepartment = nameDepartment;
-        this.nameLanguageDepartment = nameLanguageDepartment;
-        this.nameDepartmentExist = nameDepartmentExist;
+    public ExistDepartment(@JsonProperty("nameLanguageDepartmentExist") String nameLanguageDepartmentExist,
+                           @JsonProperty("nameCategoryDepartmentExist") String nameCategoryDepartmentExist,
+                           @JsonProperty("nameDepartmentExist") String nameDepartmentExist,
+                           @JsonProperty("nameLanguageDepartment") String nameLanguageDepartment,
+                           @JsonProperty("nameDepartment") String nameDepartment) {
         this.nameLanguageDepartmentExist = nameLanguageDepartmentExist;
         this.nameCategoryDepartmentExist = nameCategoryDepartmentExist;
-    }
-
-    public String getNameDepartment() {
-        return nameDepartment;
-    }
-
-    public String getNameLanguageDepartment() {
-        return nameLanguageDepartment;
-    }
-
-    public String getNameDepartmentExist() {
-        return nameDepartmentExist;
+        this.nameDepartmentExist = nameDepartmentExist;
+        this.nameLanguageDepartment = nameLanguageDepartment;
+        this.nameDepartment = nameDepartment;
     }
 
     public String getNameLanguageDepartmentExist() {
@@ -37,5 +27,17 @@ public class ExistDepartment {
 
     public String getNameCategoryDepartmentExist() {
         return nameCategoryDepartmentExist;
+    }
+
+    public String getNameDepartmentExist() {
+        return nameDepartmentExist;
+    }
+
+    public String getNameLanguageDepartment() {
+        return nameLanguageDepartment;
+    }
+
+    public String getNameDepartment() {
+        return nameDepartment;
     }
 }

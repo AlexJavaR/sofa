@@ -35,12 +35,22 @@ public class DepartmentTranslateRepositoryImpl implements DepartmentTranslateRep
     }
 
     @Override
+    public List<DepartmentTranslate> getAllDepartmentByLanguage(Language language) {
+        return crudDepartmentTranslateRepository.getAllDepartmentByLanguage(language);
+    }
+
+    @Override
+    public List<DepartmentTranslate> getAllDepartmentByLanguageAndName(Language language, Category category) {
+        return crudDepartmentTranslateRepository.getAllDepartmentByLanguageAndCategory(language, category);
+    }
+
+    @Override
     public DepartmentTranslate getDepartmentTranslateByCategoryAndNameIgnoreCase(Category category, String name) {
         return crudDepartmentTranslateRepository.getDepartmentTranslateByCategoryAndNameIgnoreCase(category, name);
     }
 
     @Override
-    public DepartmentTranslate getDepartmentByCategoryAndNameAndLanguage(Category category, String name, Language language) {
-        return crudDepartmentTranslateRepository.getDepartmentTranslateByCategoryAndNameIgnoreCaseAndLanguage(category, name, language);
+    public DepartmentTranslate getDepartmentByLanguageAndCategoryAndName(Language language, Category category, String name) {
+        return crudDepartmentTranslateRepository.getDepartmentTranslateByLanguageAndCategoryAndNameIgnoreCase(language, category, name);
     }
 }

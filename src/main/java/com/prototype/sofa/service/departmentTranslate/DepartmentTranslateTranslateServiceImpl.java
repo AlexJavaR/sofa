@@ -60,11 +60,24 @@ public class DepartmentTranslateTranslateServiceImpl implements DepartmentTransl
     }
 
     @Override
-    public DepartmentTranslate getDepartmentByCategoryAndNameAndLanguage(String category, String name, String language) {
-        Language lang = languageRepository.getByName(language);
-        CategoryTranslate categoryTranslate = categoryTranslateRepository.getByName(category);
+    public List<DepartmentTranslate> getAllDepartmentByLanguage(String nameLanguage) {
+        Language language = languageRepository.getByName(nameLanguage);
+        return departmentTranslateRepository.getAllDepartmentByLanguage(language);
+    }
 
-        return departmentTranslateRepository.getDepartmentByCategoryAndNameAndLanguage(categoryTranslate.getCategory(), name, lang);
+    @Override
+    public List<DepartmentTranslate> getAllDepartmentByLanguageAndName(String nameLanguage, String nameCategory) {
+        Language language = languageRepository.getByName(nameLanguage);
+        Category category = categoryTranslateRepository.getByName(nameCategory).getCategory();
+        return departmentTranslateRepository.getAllDepartmentByLanguageAndName(language, category);
+    }
+
+    @Override
+    public DepartmentTranslate getDepartmentByLanguageAndCategoryAndName(String nameLanguage, String nameCategory, String nameDepartment) {
+        Language language = languageRepository.getByName(nameLanguage);
+        Category category = categoryTranslateRepository.getByName(nameCategory).getCategory();
+
+        return departmentTranslateRepository.getDepartmentByLanguageAndCategoryAndName(language, category, nameDepartment);
     }
 
     @Override

@@ -25,20 +25,31 @@ public class DepartmentTranslateRestController {
         return departmentTranslateService.findAll();
     }
 
-    @GetMapping(value = "/{category}/{name}/{language}")
-    public DepartmentTranslate getDepartmentTranslateByName(@PathVariable("category") String category,
-                                                            @PathVariable("name") String name,
-                                                            @PathVariable("language") String language) {
-        return departmentTranslateService.getDepartmentByCategoryAndNameAndLanguage(category, name, language);
+    @GetMapping(value = "/all/{nameLanguage}")
+    public List<DepartmentTranslate> getAll(@PathVariable("nameLanguage") String nameLanguage) {
+        return departmentTranslateService.getAllDepartmentByLanguage(nameLanguage);
     }
 
-    @PostMapping(value = "/create")
+    @GetMapping(value = "/all/{nameLanguage}/{nameCategory}")
+    public List<DepartmentTranslate> getAll(@PathVariable("nameLanguage") String nameLanguage,
+                                            @PathVariable("nameCategory") String nameCategory) {
+        return departmentTranslateService.getAllDepartmentByLanguageAndName(nameLanguage, nameCategory);
+    }
+
+    @GetMapping(value = "/{nameLanguage}/{nameCategory}/{nameDepartment}")
+    public DepartmentTranslate getDepartmentTranslateByName(@PathVariable("nameLanguage") String nameLanguage,
+                                                            @PathVariable("nameCategory") String nameCategory,
+                                                            @PathVariable("nameDepartment") String nameDepartment) {
+        return departmentTranslateService.getDepartmentByLanguageAndCategoryAndName(nameLanguage, nameCategory, nameDepartment);
+    }
+
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<DepartmentTranslate>> createDepartmentWithFewLanguages(@RequestBody List<ToDepartment> toDepartments) {
         List<DepartmentTranslate> departmentTranslateList = departmentTranslateService.createDepartmentWithFewLanguages(toDepartments);
         return new ResponseEntity<>(departmentTranslateList, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/create")
+    @PutMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DepartmentTranslate> addDepartmentToExist(@RequestBody ExistDepartment existDepartment) {
         DepartmentTranslate departmentTranslate = departmentTranslateService.addDepartmentToExist(existDepartment);
         if (departmentTranslate == null)

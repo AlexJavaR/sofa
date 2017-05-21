@@ -29,7 +29,11 @@ public interface CrudDepartmentTranslateRepository extends JpaRepository<Departm
     @Query("SELECT d FROM DepartmentTranslate d ORDER BY d.id")
     List<DepartmentTranslate> findAll();
 
+    List<DepartmentTranslate> getAllDepartmentByLanguage(Language language);
+
+    List<DepartmentTranslate> getAllDepartmentByLanguageAndCategory(Language language, Category category);
+
     DepartmentTranslate getDepartmentTranslateByCategoryAndNameIgnoreCase(Category category, String name);
 
-    DepartmentTranslate getDepartmentTranslateByCategoryAndNameIgnoreCaseAndLanguage(Category category, String name, Language language);
+    DepartmentTranslate getDepartmentTranslateByLanguageAndCategoryAndNameIgnoreCase(Language language, Category category, String name);
 }

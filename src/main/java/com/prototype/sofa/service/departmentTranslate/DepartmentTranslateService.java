@@ -20,9 +20,13 @@ public interface DepartmentTranslateService {
 
     void update(DepartmentTranslate departmentTranslate);
 
-    DepartmentTranslate getDepartmentByCategoryAndNameAndLanguage(String category, String name, String language);
+    DepartmentTranslate getDepartmentByLanguageAndCategoryAndName(String nameLanguage, String nameCategory, String nameDepartment);
 
     DepartmentTranslate addDepartmentToExist(ExistDepartment existDepartment);
 
     List<DepartmentTranslate> createDepartmentWithFewLanguages(List<ToDepartment> toDepartments);
+
+    List<DepartmentTranslate> getAllDepartmentByLanguage(String nameLanguage);
+
+    List<DepartmentTranslate> getAllDepartmentByLanguageAndName(String nameLanguage, String nameCategory);
 }

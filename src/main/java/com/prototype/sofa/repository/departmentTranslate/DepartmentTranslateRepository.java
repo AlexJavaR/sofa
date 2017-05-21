@@ -17,7 +17,11 @@ public interface DepartmentTranslateRepository {
 
     List<DepartmentTranslate> findAll();
 
-    DepartmentTranslate getDepartmentTranslateByCategoryAndNameIgnoreCase(Category category, String name);
+    DepartmentTranslate getDepartmentTranslateByCategoryAndNameIgnoreCase(Category category, String nameDepartment);
 
-    DepartmentTranslate getDepartmentByCategoryAndNameAndLanguage(Category category, String name, Language language);
+    DepartmentTranslate getDepartmentByLanguageAndCategoryAndName(Language language, Category category, String nameDepartment);
+
+    List<DepartmentTranslate> getAllDepartmentByLanguage(Language language);
+
+    List<DepartmentTranslate> getAllDepartmentByLanguageAndName(Language lang, Category category);
 }
