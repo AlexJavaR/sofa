@@ -87,7 +87,7 @@ CREATE TABLE branches
   longitude      DOUBLE PRECISION NOT NULL CHECK(longitude > -180 and longitude <= 180),
   phone          TEXT NOT NULL,
   hour           TEXT NOT NULL,
-  location       geography(POINT, 4326) NOT NULL, -- PostGIS geom field with SRID 4326
+  location       geography(POINT, 4326), --NOT NULL, -- PostGIS geom field with SRID 4326
   FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX branches_unique_place_department_idx ON branches (place_id, department_id);

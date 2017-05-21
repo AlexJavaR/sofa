@@ -1,6 +1,7 @@
 package com.prototype.sofa.repository.branch;
 
 import com.prototype.sofa.model.Branch;
+import com.prototype.sofa.model.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -38,7 +39,18 @@ public class BranchRepositoryImpl implements BranchRepository {
     }
 
     @Override
+    public List<Branch> getAllBranchesByDepartment(Department department) {
+        List<Branch> branches = crudBranchRepository.getAllBranchesByDepartment(department);
+        return branches;
+    }
+
+    @Override
     public List<Branch> getAllBranchesByRadius(Double latitude, Double longitude, Double radius) {
         return crudBranchRepository.getAllBranchesByRadius(latitude, longitude, radius);
+    }
+
+    @Override
+    public void addLocationToBranch(Integer id, Double latitude, Double longitude) {
+        crudBranchRepository.addLocationToBranch(id);
     }
 }

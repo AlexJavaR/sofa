@@ -68,29 +68,32 @@ public class BranchServiceImpl implements BranchService {
             return null;
         }
 
-        CategoryTranslate categoryTranslate = categoryTranslateRepository.getByName(toBranch.getNameCategory());
-        if (categoryTranslate == null) {
+        Category category = categoryTranslateRepository.getByName(toBranch.getNameCategory()).getCategory();
+        if (category == null) {
             return null;
             //categoryTranslate = categoryTranslateRepository.save(new CategoryTranslate(toBranch.getNameCategory(), new Category(), language));
         }
 
         DepartmentTranslate departmentTranslate =
-                departmentTranslateRepository.getDepartmentByCategoryAndNameAndLanguage(categoryTranslate.getCategory(), toBranch.getNameDepartment(), language);
+                departmentTranslateRepository.getDepartmentByLanguageAndCategoryAndName(language, category, toBranch.getNameDepartment());
         Department department;
         if (departmentTranslate == null) {
             department = departmentRepository.save(new Department());
-            departmentTranslate = departmentTranslateRepository.save(new DepartmentTranslate(toBranch.getNameDepartment(),
-                    categoryTranslate.getCategory(), language, department));
+            departmentTranslate = departmentTranslateRepository.save(new DepartmentTranslate(toBranch.getNameDepartment(), category, language, department));
         } else {
             department = departmentTranslate.getDepartment();
         }
         Branch branch = new Branch(toBranch.getPlaceId(), toBranch.getLatitude(),
-                        toBranch.getLongitude(), toBranch.getPhoneNumber(), toBranch.getOpenHours());
+                        toBranch.getLongitude(), toBranch.getPhoneNumber(), toBranch.getOpenHours(), null);
         branch.setDepartment(department);
+        //branch.setLocation(new Point(branch.getLatitude(), branch.getLongitude()));
 
         departmentTranslate.getDepartment().getBranches().add(branch);
         departmentTranslateRepository.save(departmentTranslate);
         branch = branchRepository.save(branch);
+
+        branchRepository.addLocationToBranch(branch.getId(), branch.getLatitude(), branch.getLongitude());
+        branch = branchRepository.findOne(branch.getId());
 
         return branch;
     }
@@ -98,16 +101,19 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public DepartmentTranslate getDepartmentTranslateByBranch(ToBranch toBranch) {
         Language language = languageRepository.getByName(toBranch.getNameLanguage());
-        CategoryTranslate categoryTranslate = categoryTranslateRepository.getByName(toBranch.getNameCategory());
-        return departmentTranslateRepository.getDepartmentByCategoryAndNameAndLanguage(categoryTranslate.getCategory(), toBranch.getNameDepartment(), language);
+        Category category = categoryTranslateRepository.getByName(toBranch.getNameCategory()).getCategory();
+        return departmentTranslateRepository.getDepartmentByLanguageAndCategoryAndName(language, category, toBranch.getNameDepartment());
     }
 
     @Override
-    public List<Branch> getAllBranchesByCategoryAndNameDepartment(String nameCategory, String nameDepartment) {
-        CategoryTranslate categoryTranslate = categoryTranslateRepository.getByName(nameCategory);
-        DepartmentTranslate departmentTranslate = departmentTranslateRepository.getDepartmentTranslateByCategoryAndNameIgnoreCase(categoryTranslate.getCategory(), nameDepartment);
-
-        return departmentTranslate.getDepartment().getBranches();
+    public List<Branch> getAllBranchesByCategoryAndDepartment(String nameLanguage, String nameCategory, String nameDepartment) {
+        Language language = languageRepository.getByName(nameLanguage);
+        Category category = categoryTranslateRepository.getByName(nameCategory).getCategory();
+        DepartmentTranslate departmentTranslate = departmentTranslateRepository.getDepartmentByLanguageAndCategoryAndName(language, category, nameDepartment);
+        Department department = departmentTranslate.getDepartment();
+        List<Branch> branches = branchRepository.getAllBranchesByDepartment(department);
+        if (branches.isEmpty()) return null;
+        else return branches;
     }
 
     @Override

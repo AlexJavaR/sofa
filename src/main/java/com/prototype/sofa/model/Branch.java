@@ -36,15 +36,22 @@ public class Branch extends BaseEntity {
     @JsonManagedReference
     private Department department;
 
+    //@Type(type = "org.hibernate.spatial.GeographyType")
+    //@Column(name = "location", columnDefinition="geography(POINT, 4326)", nullable = false)
+    @Column(name = "location", nullable = false)
+    @Transient
+    private String location;
+
     public Branch() {
     }
 
-    public Branch(String placeId, Double latitude, Double longitude, String phoneNumber, String openHours) {
+    public Branch(String placeId, Double latitude, Double longitude, String phoneNumber, String openHours, String location) {
         this.placeId = placeId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.phoneNumber = phoneNumber;
         this.openHours = openHours;
+        this.location = location;
     }
 
     public String getPlaceId() {
@@ -93,5 +100,13 @@ public class Branch extends BaseEntity {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
