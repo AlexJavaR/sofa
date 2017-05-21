@@ -24,7 +24,7 @@ public class LanguageRestController {
         return languageService.findAll();
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Language> addLanguage(@RequestBody ToLanguage toLanguage) {
         Language language = languageService.addLanguage(toLanguage.getNameLanguage());
         if (language == null)

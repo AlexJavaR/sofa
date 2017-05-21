@@ -25,13 +25,13 @@ public class CategoryTranslateRestController {
         return categoryTranslateService.findAll();
     }
 
-    @GetMapping(value = "/all/{language}")
-    public List<CategoryTranslate> getAllCategoriesByLanguage(@PathVariable("language") String nameLanguage) {
+    @GetMapping(value = "/all/{nameLanguage}")
+    public List<CategoryTranslate> getAllCategoriesByLanguage(@PathVariable("nameLanguage") String nameLanguage) {
         return categoryTranslateService.findAllCategoriesByLanguage(nameLanguage);
     }
 
-    @GetMapping(value = "/name/{name}")
-    public List<CategoryTranslate> getCategoryWithAllLanguagesByName(@PathVariable("name") String nameCategory) {
+    @GetMapping(value = "/name/{nameCategory}")
+    public List<CategoryTranslate> getCategoryWithAllLanguagesByName(@PathVariable("nameCategory") String nameCategory) {
         return categoryTranslateService.getCategoryWithAllLanguagesByName(nameCategory);
     }
 
@@ -40,13 +40,13 @@ public class CategoryTranslateRestController {
         return categoryTranslateService.getCategoryWithAllLanguagesById(id);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CategoryTranslate>> createCategoryWithFewLanguages(@RequestBody Map<String, String> categories) {
         List<CategoryTranslate> categoryTranslateList = categoryTranslateService.createCategoryWithFewLanguages(categories);
         return new ResponseEntity<>(categoryTranslateList, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/create")
+    @PutMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryTranslate> addCategoryToExist(@RequestBody ExistCategory existCategory) {
         CategoryTranslate categoryTranslate = categoryTranslateService.addCategoryToExist(existCategory);
         if (categoryTranslate == null)
