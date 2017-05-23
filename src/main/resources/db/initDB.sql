@@ -54,7 +54,7 @@ CREATE TABLE real_words
 (
   name                     VARCHAR NOT NULL,
   department_translate_id  INTEGER NOT NULL,
-  language_id    INTEGER NOT NULL,
+  language_id              INTEGER NOT NULL,
   FOREIGN KEY (language_id) REFERENCES languages (id) ON DELETE CASCADE,
   FOREIGN KEY (department_translate_id) REFERENCES departments_translate (id) ON DELETE CASCADE
 );
@@ -64,7 +64,7 @@ CREATE TABLE key_words
 (
   name             VARCHAR NOT NULL,
   real_word_name   VARCHAR NOT NULL,
-  language_id    INTEGER NOT NULL,
+  language_id      INTEGER NOT NULL,
   FOREIGN KEY (language_id) REFERENCES languages (id) ON DELETE CASCADE,
   FOREIGN KEY (real_word_name) REFERENCES real_words (name) ON DELETE CASCADE
 );
@@ -86,9 +86,18 @@ CREATE TABLE branches
   latitude       DOUBLE PRECISION NOT NULL CHECK(latitude > -90 and latitude <= 90),
   longitude      DOUBLE PRECISION NOT NULL CHECK(longitude > -180 and longitude <= 180),
   phone          TEXT NOT NULL,
-  hour           TEXT NOT NULL,
   location       geography(POINT, 4326), --NOT NULL, -- PostGIS geom field with SRID 4326
   FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX branches_unique_place_department_idx ON branches (place_id, department_id);
 CREATE INDEX branches_location_idx ON branches USING GIST(location);
+
+CREATE TABLE branch_open_hours
+(
+  branch_id   INTEGER NOT NULL,
+  open_hours  VARCHAR(255) NOT NULL,
+  day         INTEGER NOT NULL,
+  FOREIGN KEY (branch_id) REFERENCES branches (id),
+  PRIMARY KEY (branch_id, day)
+);
+CREATE UNIQUE INDEX branch_open_hours_key ON branch_open_hours (branch_id ASC, day ASC);

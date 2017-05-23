@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 @Entity
 @Table(name = "branches", uniqueConstraints = {@UniqueConstraint(columnNames = {"place_id", "department_id"}, name = "branches_unique_place_department_idx")})
@@ -27,29 +28,32 @@ public class Branch extends BaseEntity {
     @NotEmpty
     private String phoneNumber;
 
-    @Column(name = "hour", nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @MapKeyColumn(name="day")
+    //@Column(name="hour", nullable = false)
     @NotEmpty
-    private String openHours;
+    private Map<Integer, String> openHours;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id", nullable = false)
     @JsonManagedReference
     private Department department;
 
-    //@Type(type = "org.hibernate.spatial.GeographyType")
-    //@Column(name = "location", columnDefinition="geography(POINT, 4326)", nullable = false)
-    @Column(name = "location", nullable = false)
+    //@Type(type = "org.hibernate.spatial.GeometryType")
+    @Column(name = "location", columnDefinition="geography(POINT, 4326)", nullable = false)
+    //@Column(name = "location", nullable = false)
     @Transient
     private String location;
 
     public Branch() {
     }
 
-    public Branch(String placeId, Double latitude, Double longitude, String phoneNumber, String openHours, String location) {
+    public Branch(String placeId, Double latitude, Double longitude, String phoneNumber, Map<Integer, String> openHours, String location) {
         this.placeId = placeId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.phoneNumber = phoneNumber;
+        this.openHours = openHours;
         this.openHours = openHours;
         this.location = location;
     }
@@ -86,11 +90,11 @@ public class Branch extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getOpenHours() {
+    public Map<Integer, String> getOpenHours() {
         return openHours;
     }
 
-    public void setOpenHours(String openHours) {
+    public void setOpenHours(Map<Integer, String> openHours) {
         this.openHours = openHours;
     }
 

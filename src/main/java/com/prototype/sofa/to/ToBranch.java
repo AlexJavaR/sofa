@@ -2,6 +2,9 @@ package com.prototype.sofa.to;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ToBranch {
     private String placeId;
     private Double latitude;
@@ -10,12 +13,12 @@ public class ToBranch {
     private String nameCategory;
     private String nameLanguage;
     private String phoneNumber;
-    private String openHours;
+    private Map<Integer, String> openHours = new HashMap<>();
 
     public ToBranch(@JsonProperty("placeId") String placeId, @JsonProperty("latitude") Double latitude, @JsonProperty("longitude") Double longitude,
                     @JsonProperty("nameDepartment") String nameDepartment, @JsonProperty("nameCategory") String nameCategory,
                     @JsonProperty("nameLanguage") String nameLanguage, @JsonProperty("phoneNumber") String phoneNumber,
-                    @JsonProperty("openHours") String openHours) {
+                    @JsonProperty("openHours") Map<Integer, String> openHours) {
         this.placeId = placeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -54,7 +57,7 @@ public class ToBranch {
         return phoneNumber;
     }
 
-    public String getOpenHours() {
+    public Map<Integer, String> getOpenHours() {
         return openHours;
     }
 }
