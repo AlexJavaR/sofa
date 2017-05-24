@@ -81,6 +81,7 @@ CREATE TABLE tips
 CREATE TABLE branches
 (
   id             INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  category_id    INTEGER NOT NULL,
   department_id  INTEGER NOT NULL,
   place_id       VARCHAR NOT NULL,
   latitude       DOUBLE PRECISION NOT NULL CHECK(latitude > -90 and latitude <= 90),

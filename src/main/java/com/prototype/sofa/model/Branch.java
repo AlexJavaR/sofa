@@ -35,6 +35,11 @@ public class Branch extends BaseEntity {
     private Map<Integer, String> openHours;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id", nullable = false)
+    @JsonManagedReference
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id", nullable = false)
     @JsonManagedReference
     private Department department;
@@ -96,6 +101,14 @@ public class Branch extends BaseEntity {
 
     public void setOpenHours(Map<Integer, String> openHours) {
         this.openHours = openHours;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Department getDepartment() {
