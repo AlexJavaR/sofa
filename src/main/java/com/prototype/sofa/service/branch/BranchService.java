@@ -27,4 +27,8 @@ public interface BranchService {
     List<Branch> getAllBranchesByCategoryAndDepartment(String nameLanguage, String nameCategory, String nameDepartment);
 
     List<Branch> getAllBranchesByRadius(Double latitude, Double longitude, Double radius);
+
+    List<Branch> getAllBranchesByCategoryAndRadius(String nameCategory, Double latitude, Double longitude, Double radius);
+
+    List<Branch> getAllBranchesByCategoryAndDepartmentAndRadius(String nameCategory, String nameDepartment, Double latitude, Double longitude, Double radius);
 }

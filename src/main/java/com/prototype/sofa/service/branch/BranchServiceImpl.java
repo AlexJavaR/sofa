@@ -85,8 +85,8 @@ public class BranchServiceImpl implements BranchService {
         }
         Branch branch = new Branch(toBranch.getPlaceId(), toBranch.getLatitude(),
                         toBranch.getLongitude(), toBranch.getPhoneNumber(), toBranch.getOpenHours(), null);
+        branch.setCategory(category);
         branch.setDepartment(department);
-        //branch.setLocation(new Point(branch.getLatitude(), branch.getLongitude()));
 
         departmentTranslate.getDepartment().getBranches().add(branch);
         departmentTranslateRepository.save(departmentTranslate);
@@ -119,5 +119,18 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public List<Branch> getAllBranchesByRadius(Double latitude, Double longitude, Double radius) {
         return branchRepository.getAllBranchesByRadius(latitude, longitude, radius);
+    }
+
+    @Override
+    public List<Branch> getAllBranchesByCategoryAndRadius(String nameCategory, Double latitude, Double longitude, Double radius) {
+        Category category = categoryTranslateRepository.getByName(nameCategory).getCategory();
+        return branchRepository.getAllBranchesByCategoryAndRadius(category.getId(), latitude, longitude, radius);
+    }
+
+    @Override
+    public List<Branch> getAllBranchesByCategoryAndDepartmentAndRadius(String nameCategory, String nameDepartment, Double latitude, Double longitude, Double radius) {
+        Category category = categoryTranslateRepository.getByName(nameCategory).getCategory();
+        Department department = departmentTranslateRepository.getDepartmentTranslateByCategoryAndNameIgnoreCase(category, nameDepartment).getDepartment();
+        return branchRepository.getAllBranchesByCategoryAndDepartmentAndRadius(category.getId(), department.getId(), latitude, longitude, radius);
     }
 }

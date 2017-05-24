@@ -50,6 +50,16 @@ public class BranchRepositoryImpl implements BranchRepository {
     }
 
     @Override
+    public List<Branch> getAllBranchesByCategoryAndRadius(Integer categoryId, Double latitude, Double longitude, Double radius) {
+        return crudBranchRepository.getAllBranchesByCategoryAndRadius(categoryId, latitude, longitude, radius);
+    }
+
+    @Override
+    public List<Branch> getAllBranchesByCategoryAndDepartmentAndRadius(Integer categoryId, Integer departmentId, Double latitude, Double longitude, Double radius) {
+        return crudBranchRepository.getAllBranchesByCategoryAndDepartmentAndRadius(categoryId, departmentId, latitude, longitude, radius);
+    }
+
+    @Override
     public void addLocationToBranch(Integer id, Double latitude, Double longitude) {
         crudBranchRepository.addLocationToBranch(id);
     }

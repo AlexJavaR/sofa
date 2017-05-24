@@ -31,11 +31,26 @@ public class BranchRestController {
         return branchService.getAllBranchesByCategoryAndDepartment(nameLanguage, nameCategory, nameDepartment);
     }
 
-    @GetMapping(value = "/all/radius")
-    public List<Branch> getAllBranchesByRadius(@RequestParam(value = "latitude", required = false) Double latitude,
-                                               @RequestParam(value = "longitude", required = false) Double longitude,
-                                               @RequestParam(value = "radius", required = false) Double radius) {
+    @GetMapping(value = "/radius/{latitude}/{longitude}/{radius}")
+    public List<Branch> getAllBranchesByRadius(@PathVariable("latitude") Double latitude,
+                                               @PathVariable("longitude") Double longitude,
+                                               @PathVariable("radius") Double radius) {
         return branchService.getAllBranchesByRadius(latitude, longitude, radius);
+    }
+
+    @GetMapping(value = "/radius/{nameCategory}/{latitude}/{longitude}/{radius}")
+    public List<Branch> getAllBranchesByCategoryAndRadius(@PathVariable("nameCategory") String nameCategory, @PathVariable("latitude") Double latitude,
+                                                          @PathVariable("longitude") Double longitude, @PathVariable("radius") Double radius) {
+        return branchService.getAllBranchesByCategoryAndRadius(nameCategory, latitude, longitude, radius);
+    }
+
+    @GetMapping(value = "/radius/{nameCategory}/{nameDepartment}/{latitude}/{longitude}/{radius}")
+    public List<Branch> getAllBranchesByCategoryAndDepartmentAndRadius(@PathVariable("nameCategory") String nameCategory,
+                                                                       @PathVariable("nameDepartment") String nameDepartment,
+                                                                       @PathVariable("latitude") Double latitude,
+                                                                       @PathVariable("longitude") Double longitude,
+                                                                       @PathVariable("radius") Double radius) {
+        return branchService.getAllBranchesByCategoryAndDepartmentAndRadius(nameCategory, nameDepartment, latitude, longitude, radius);
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)

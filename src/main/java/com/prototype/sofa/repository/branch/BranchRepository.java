@@ -24,4 +24,8 @@ public interface BranchRepository {
     List<Branch> getAllBranchesByDepartment(Department department);
 
     void addLocationToBranch(Integer id, Double latitude, Double longitude);
+
+    List<Branch> getAllBranchesByCategoryAndRadius(Integer categoryId, Double latitude, Double longitude, Double radius);
+
+    List<Branch> getAllBranchesByCategoryAndDepartmentAndRadius(Integer categoryId, Integer departmentId, Double latitude, Double longitude, Double radius);
 }

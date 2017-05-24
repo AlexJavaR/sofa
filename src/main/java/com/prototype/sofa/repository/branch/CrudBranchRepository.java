@@ -36,6 +36,17 @@ public interface CrudBranchRepository extends JpaRepository<Branch, Integer> {
             "ORDER BY ST_Distance(location, ST_MakePoint(:latitude, :longitude))", nativeQuery = true)
     List<Branch> getAllBranchesByRadius(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("radius") Double radius);
 
+    @Query(value = "SELECT * FROM branches WHERE branches.category_id=:categoryId AND ST_Distance(location, ST_MakePoint(:latitude, :longitude)) <= :radius * 1000 " +
+            "ORDER BY ST_Distance(location, ST_MakePoint(:latitude, :longitude))", nativeQuery = true)
+    List<Branch> getAllBranchesByCategoryAndRadius(@Param("categoryId") Integer categoryId, @Param("latitude") Double latitude,
+                                                   @Param("longitude") Double longitude, @Param("radius") Double radius);
+
+    @Query(value = "SELECT * FROM branches WHERE branches.category_id=:categoryId AND branches.department_id=:departmentId AND ST_Distance(location, ST_MakePoint(:latitude, :longitude)) <= :radius * 1000 " +
+            "ORDER BY ST_Distance(location, ST_MakePoint(:latitude, :longitude))", nativeQuery = true)
+    List<Branch> getAllBranchesByCategoryAndDepartmentAndRadius(@Param("categoryId") Integer categoryId, @Param("departmentId") Integer departmentId,
+                                                                @Param("latitude") Double latitude, @Param("longitude") Double longitude,
+                                                                @Param("radius") Double radius);
+
     @Query("SELECT b FROM Branch b WHERE b.department=:department")
     List<Branch> getAllBranchesByDepartment(@Param("department") Department department);
 
