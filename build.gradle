@@ -33,6 +33,9 @@ dependencies {
 //	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: '2.8.8'
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.8'
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8'
+	//WEB
+	compile 'org.webjars:jquery:2.1.4'
+	compile 'org.webjars:bootstrap:3.3.4'
 //	compile group: 'com.zaxxer', name: 'HikariCP-java6', version: '2.3.13'
 //	compile group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '8.5.13'
 }
